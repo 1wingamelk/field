@@ -1,9 +1,0 @@
-const GRID_SIZE = { rows: 6, cols: 3 };
-const MULTIPLIERS = [1.44, 2.16, 3.24, 4.86, 7.29, 10.94]; // От нижнего ряда к верхнему
-const DEFAULT_BET = 100.00;
-let currentBalance = 1000.00; // Начальный баланс
-let currentBet = DEFAULT_BET;
-let gameActive = false;
-let currentRow = 0; // Текущий ряд, в котором выбираем ячейку
-let currentMultiplier = 1.0;
-let winAmount = 0.0;
