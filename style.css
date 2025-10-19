@@ -1,0 +1,243 @@
+/* style.css */
+
+:root {
+    --color-dark-bg: #1A1A22; /* Основной темный фон */
+    --color-grid-cell: #292936; /* Цвет неактивной/закрытой ячейки */
+    --color-safe-cell: #4CAF50; /* Цвет открытой безопасной ячейки (зеленый) */
+    --color-multiplier-text: #606060; /* Цвет текста множителей */
+    --color-text-light: #FFFFFF; /* Светлый текст */
+    --color-text-dim: #A0A0A0; /* Тусклый текст */
+    --color-green-button: #4CAF50; /* Зеленая кнопка */
+    --color-red-flag: #D32F2F; /* Красный флаг */
+    --border-radius-large: 10px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent; /* Убирает синее выделение при тапе на iOS */
+}
+
+body, html {
+    height: 100%;
+    background-color: var(--color-dark-bg);
+    color: var(--color-text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-container {
+    width: 100%;
+    max-width: 450px; /* Ограничение ширины для мобильного вида */
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* --- Хедер (Верхняя панель) --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+}
+
+#balance-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.icon-button, .green-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.icon-button img {
+    width: 24px;
+    height: 24px;
+    filter: invert(1); /* Сделать иконки белыми */
+}
+
+.green-button {
+    background-color: var(--color-green-button);
+    color: var(--color-text-light);
+    padding: 8px 15px;
+    border-radius: var(--border-radius-large);
+    font-weight: bold;
+}
+
+/* --- Сетка (Игровое поле) --- */
+#minefield-grid {
+    display: flex;
+    flex-direction: column-reverse; /* Начинаем снизу */
+    flex-grow: 1;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.grid-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.multiplier {
+    width: 60px; /* Ширина колонки множителей */
+    color: var(--color-multiplier-text);
+    font-size: 0.8em;
+    text-align: right;
+    padding-right: 10px;
+    visibility: hidden; /* По умолчанию скрыты, пока игра не начнется */
+}
+
+.grid-row.active .multiplier {
+    visibility: visible; /* Видны только в активных рядах */
+}
+
+.cell {
+    width: 80px;
+    height: 80px;
+    background-color: var(--color-grid-cell);
+    margin: 0 5px;
+    border-radius: var(--border-radius-large);
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s, transform 0.1s;
+    /* Стиль для создания "выпуклого" эффекта */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.cell:active:not(.opened) {
+    transform: scale(0.98);
+}
+
+/* Состояния ячеек */
+.cell.opened {
+    background-color: var(--color-safe-cell);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.3); /* Немного другой "вдавленный" вид */
+}
+
+.cell.mine-flag:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url('assets/icons/cell-mine-flag.svg'); /* Замените на вашу иконку флага */
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: invert(0.5) sepia(1) saturate(10) hue-rotate(330deg); /* Красный флаг */
+}
+
+/* --- Анимация Победы (WIN DEMO 144,00) --- */
+#win-animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background-color: rgba(76, 175, 80, 0.9); /* Полупрозрачный зеленый фон */
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-size: 2em;
+    font-weight: 900;
+    color: var(--color-text-light);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    pointer-events: none; /* Не блокирует нажатия */
+    text-align: center;
+}
+
+#win-animation.visible {
+    opacity: 1;
+}
+
+/* --- Панель Управления --- */
+#controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 15px 0;
+}
+
+.large-button {
+    width: 120px;
+    height: 60px;
+    font-size: 1.1em;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    transition: opacity 0.3s;
+}
+
+.large-button:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* Специальные стили для кнопки Cashout */
+#btn-cashout.icon-button {
+    width: 60px;
+    height: 60px;
+    background-color: var(--color-grid-cell); /* Темный фон, как у ячеек */
+    border-radius: var(--border-radius-large);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}
+
+/* Замена центральной кнопки на Cashout */
+.start-state #btn-cashout {
+    display: none;
+}
+.playing-state #btn-start-play {
+    display: none;
+}
+.playing-state #btn-cashout {
+    display: flex;
+}
+
+/* --- Статистика (Нижняя панель) --- */
+#game-stats {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 0 20px 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-text-dim);
+    font-size: 0.7em;
+    font-weight: 500;
+}
+
+.stat-item img {
+    width: 20px;
+    height: 20px;
+    filter: invert(0.5);
+    margin-bottom: 3px;
+}
+
+.hidden {
+    display: none !important;
+}
