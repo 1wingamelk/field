@@ -1,1 +1,54 @@
-f
+<div id="game-container">
+    <header>
+        <button id="btn-back" class="icon-button"><img src="assets/icons/icon-back.svg" alt="Назад"></button>
+        <div id="balance-info">
+            <span id="currency">RUB</span>
+            <span id="balance-value">0,00</span>
+        </div>
+        <button id="btn-deposit" class="green-button">Пополнить</button>
+        <button id="btn-star" class="icon-button"><img src="assets/icons/icon-star.svg" alt="Избранное"></button>
+    </header>
+
+    <div id="minefield-grid">
+        <div class="grid-row" data-row="5" data-multiplier="10.94">
+            <div class="multiplier">10.94</div>
+            <div class="cell" data-col="0"></div>
+            <div class="cell" data-col="1"></div>
+            <div class="cell" data-col="2"></div>
+        </div>
+        <div class="grid-row" data-row="0" data-multiplier="1.44">
+            <div class="multiplier">1.44</div>
+            <div class="cell" data-col="0"></div>
+            <div class="cell" data-col="1"></div>
+            <div class="cell" data-col="2"></div>
+        </div>
+    </div>
+
+    <div id="win-animation" class="hidden">
+        <span id="win-amount"></span>
+    </div>
+
+    <div id="controls">
+        <button id="btn-copy" class="icon-button"><img src="assets/icons/icon-copy.svg" alt="Копировать"></button>
+        <button id="btn-undo" class="icon-button"><img src="assets/icons/icon-undo.svg" alt="Отмена"></button>
+        <button id="btn-settings" class="icon-button"><img src="assets/icons/icon-settings.svg" alt="Настройки"></button>
+
+        <button id="btn-start-play" class="large-button green-button">Start</button> <button id="btn-cashout" class="icon-button hidden"><img src="assets/icons/icon-cashout.svg" alt="Забрать"></button>
+        <button id="btn-menu" class="icon-button"><img src="assets/icons/icon-menu.svg" alt="Меню"></button>
+    </div>
+
+    <div id="game-stats">
+        <div class="stat-item">
+            <img src="assets/icons/icon-wallet.svg" alt="Кошелек">
+            <span id="demo-balance-current">DEMO 99 488,00</span>
+        </div>
+        <div class="stat-item">
+            <img src="assets/icons/icon-trophy.svg" alt="Выигрыш">
+            <span id="demo-win-amount">WIN DEMO 144,00</span>
+        </div>
+        <div class="stat-item">
+            <img src="assets/icons/icon-coins.svg" alt="Ставка">
+            <span id="demo-bet-amount">DEMO 100,00</span>
+        </div>
+    </div>
+</div>
